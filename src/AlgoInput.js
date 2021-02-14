@@ -1,5 +1,13 @@
-function AlgoInput() {
-  const difficulty = () => {
+import './AlgoInput.css';
+import React, {Component} from 'react';
+
+class AlgoInput extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
+  difficulty = () => {
     return (
       <div>
         Difficulty:
@@ -18,17 +26,33 @@ function AlgoInput() {
       </div>
     );
   };
-  return (
-    <form>
-      <div>
-        <input type="text" placeholder="name" />
-        <input type="text" placeholder="link" />
-        <input type="date" placeholder="mm/dd/yy" />
-        <textarea placeholder="reflection" />
-        {difficulty()}
-      </div>
-    </form>
-  );
+
+  handleSumbit = event => {
+    event.preventDefault();
+  };
+
+  render() {
+    //set current date for calendar
+    const curr = new Date();
+    const date = curr.toISOString().substr(0, 10);
+    return (
+      <form onSubmit={this.handleSumbit} className="form-container">
+        <div className="algo-container">
+          <input type="text" placeholder="name" className="form-input" />
+          <input type="text" placeholder="link" className="form-input" />
+          <textarea placeholder="reflection" className="form-input" />
+          <input
+            type="date"
+            className="form-date"
+            name="dateRequired"
+            defaultValue={date}
+          />
+          {this.difficulty()}
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+    );
+  }
 }
 
 export default AlgoInput;
