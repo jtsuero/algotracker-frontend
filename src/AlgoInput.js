@@ -3,8 +3,10 @@ import React, {Component} from 'react';
 
 class AlgoInput extends Component {
   constructor() {
+    const curr = new Date();
+    const date = curr.toISOString().substr(0, 10);
     super();
-    this.state = {};
+    this.state = {name: '', date, reflection: '', link: ''};
   }
 
   difficulty = () => {
@@ -13,18 +15,23 @@ class AlgoInput extends Component {
         Difficulty:
         <div>
           <input type="radio" name="difficulty" id="easy" value="easy" />
-          <label for="easy">Easy</label>
+          <label>Easy</label>
         </div>
         <div>
           <input type="radio" name="difficulty" id="medium" value="medium" />
-          <label for="medium">Medium</label>
+          <label>Medium</label>
         </div>
         <div>
           <input type="radio" name="difficulty" id="hard" value="hard" />
-          <label for="hard">Hard</label>
+          <label>Hard</label>
         </div>
       </div>
     );
+  };
+
+  handleChange = e => {
+    e.preventDefault();
+    this.setState({[e.target.name]: e.target.value});
   };
 
   handleSumbit = event => {
@@ -38,14 +45,30 @@ class AlgoInput extends Component {
     return (
       <form onSubmit={this.handleSumbit} className="form-container">
         <div className="algo-container">
-          <input type="text" placeholder="name" className="form-input" />
-          <input type="text" placeholder="link" className="form-input" />
-          <textarea placeholder="reflection" className="form-input" />
+          <input
+            type="text"
+            name="name"
+            placeholder="name"
+            className="form-input"
+            onChange={this.handleChange}
+            value={this.state.name}
+          />
+          <input
+            type="text"
+            name="link"
+            placeholder="link"
+            className="form-input"
+          />
+          <textarea
+            placeholder="reflection"
+            name="reflection"
+            className="form-input"
+          />
           <input
             type="date"
             className="form-date"
             name="dateRequired"
-            defaultValue={date}
+            defaultValue={this.state.date}
           />
           {this.difficulty()}
           <input type="submit" value="Submit" />
